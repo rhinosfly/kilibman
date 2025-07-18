@@ -17,5 +17,3 @@ def remove_path(path: Path):
         path.unlink()
         return
     rmdir_recurse(path)
-        
- 
