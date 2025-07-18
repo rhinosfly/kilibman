@@ -1,10 +1,10 @@
 """base class that manages storing files"""
 
-from pathlib import Path
+from . import util
+from .hash import hash_path
 from enum import Enum
+from pathlib import Path
 from typing import Self
-import util
-from hash import hash_path
 
 
 class Store:
