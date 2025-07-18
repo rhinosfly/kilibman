@@ -20,16 +20,15 @@ class Store:
         self.path = Path(path)
         
     def get_state(self) -> State:
-        store_path = self.path
         '''check if store is missing malformed or valid'''
         #check is if dir
-        if not store_path.exists():
+        if not self.path.exists():
             return self.State.MISSING
-        if not store_path.is_dir():
+        if not self.path.is_dir():
             return self.State.MALFORMED
         #try writing
         TEST_FILE_NAME = "__testfile__.txt"
-        TEST_FILE_PATH = store_path / TEST_FILE_NAME
+        TEST_FILE_PATH = self.path / TEST_FILE_NAME
         TEST_FILE_CONTENTS = "hello world"
         try:
             TEST_FILE_PATH.write_text(TEST_FILE_CONTENTS)
@@ -43,15 +42,14 @@ class Store:
     
     
     def init(self) -> Self:
-        '''create store at store_path if DNE'''
-        store_path = self.path
+        '''create store at store path if DNE'''
         store_state = self.get_state()
         if store_state == self.State.MALFORMED:
             raise Exception("store is malformed")
         if store_state == self.State.VALID:
             return self
         if store_state == self.State.MISSING:
-            store_path.mkdir()
+            self.path.mkdir()
             return self
         else:
             # should be unreachable
@@ -59,15 +57,14 @@ class Store:
 
         
     def store_file(self, file_path: Path, name: str) -> None:
-        '''store file_path in store_path'''
-        store_path = self.path
-        # 2. generate name
+        '''store file_path in store path'''
+        # 1. generate name
         hash = hash_path(file_path)
         hash = hash[:-1] # to strip off '=' (always 1 for some reason)
         package_name = f"{hash}-{name}"
-        # 3. create directories
-        package_path = store_path / package_name
+        # 2. create directories
+        package_path = self.path / package_name
         util.remove_path(package_path)
         package_path.mkdir()
-        # 4. copy file
+        # 3. copy file
         copy(src=file_path, dst=package_path)
