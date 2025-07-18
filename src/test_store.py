@@ -2,7 +2,7 @@
 
 import unittest
 from pathlib import Path
-from .store import Store
+from store import Store
 
 
 class TestStore(unittest.TestCase):
@@ -11,7 +11,3 @@ class TestStore(unittest.TestCase):
         FILE_PATH = Path("./test_store.py")
         store = Store(STORE_PATH).init()
         store.store_file(file_path=FILE_PATH, name="testfile")
-
-
-if __name__ == "__main__":
-    unittest.main()
