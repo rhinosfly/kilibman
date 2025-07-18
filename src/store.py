@@ -35,7 +35,7 @@ class Store:
             TEST_FILE_PATH.write_text(TEST_FILE_CONTENTS)
             test_text = TEST_FILE_PATH.read_text()
             TEST_FILE_PATH.unlink()
-        except:
+        except Exception:
             return self.State.MALFORMED
         if test_text != TEST_FILE_CONTENTS:
             return self.State.MALFORMED
