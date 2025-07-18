@@ -11,9 +11,10 @@ class Store:
     '''a location to store files to'''
     
     class State(Enum):
-        MISSING = 1
-        MALFORMED = 2
-        VALID = 3
+        '''possible outcomes of initializing store'''
+        MISSING = 1     # dir doesn't exist
+        MALFORMED = 2   # could't write there
+        VALID = 3       # fine
     
     def __init__(self, path: Path):
         self.path = Path(path)
@@ -37,11 +38,15 @@ class Store:
             return self.State.MALFORMED
         if test_text != TEST_FILE_CONTENTS:
             return self.State.MALFORMED
+        # otherwise valid
         return self.State.VALID
     
     
     def init(self) -> Self:
-        '''create store at store path if DNE'''
+        '''
+        create store at store path if DNE
+        returns Self so store can be initialized in one line
+        '''
         store_state = self.get_state()
         if store_state == self.State.MALFORMED:
             raise Exception("store is malformed")
