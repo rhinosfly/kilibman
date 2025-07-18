@@ -53,7 +53,7 @@ class Store:
         if store_state == self.State.VALID:
             return self
         if store_state == self.State.MISSING:
-            self.path.mkdir()
+            self.path.mkdir(parents=True)
             return self
         else:
             # should be unreachable
