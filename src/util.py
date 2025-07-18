@@ -1,6 +1,7 @@
 '''utility functions'''
 
 from pathlib import Path
+from shutil import copy, copytree
 
 def rmdir_recurse(path: Path):
     '''as it sounds'''
@@ -17,3 +18,15 @@ def remove_path(path: Path):
         path.unlink()
         return
     rmdir_recurse(path)
+
+
+def copy_path(src: Path, dst: Path):
+    '''copy a path (file or dir) from src to path'''
+    assert(src.exists())
+    if src.is_file():
+        copy(src=src, dst=dst)
+    elif src.is_dir():
+        new_dst = dst / src.absolute().name
+        copytree(src=src, dst=new_dst)
+    else: #unreachable
+        raise Exception("neither file nor dir")

@@ -2,7 +2,6 @@
 
 from pathlib import Path
 from enum import Enum
-from shutil import copy
 from typing import Self
 import util
 from hash import hash_path
@@ -67,4 +66,4 @@ class Store:
         util.remove_path(package_path)
         package_path.mkdir()
         # 3. copy file
-        copy(src=file_path, dst=package_path)
+        util.copy_path(src=file_path, dst=package_path)
