@@ -1,3 +1,5 @@
+'''base class that manages storing files'''
+
 from pathlib import Path
 from enum import Enum
 from shutil import copy

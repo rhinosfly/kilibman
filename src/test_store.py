@@ -1,6 +1,8 @@
+'''test store module and class'''
+
 import unittest
 from pathlib import Path
-from store import Store
+from .store import Store
 
 
 class TestStore(unittest.TestCase):
