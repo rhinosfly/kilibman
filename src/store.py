@@ -5,6 +5,7 @@ from enum import Enum
 from shutil import copy
 from typing import Self
 import util
+from hash import hash_path
 
    
 class Store:
@@ -61,8 +62,9 @@ class Store:
         '''store file_path in store_path'''
         store_path = self.path
         # 2. generate name
-        # TODO hash later
-        package_name = name
+        hash = hash_path(file_path)
+        hash = hash[:-1] # to strip off '=' (always 1 for some reason)
+        package_name = f"{hash}-{name}"
         # 3. create directories
         package_path = store_path / package_name
         util.remove_path(package_path)
