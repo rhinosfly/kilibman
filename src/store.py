@@ -2,7 +2,9 @@ from pathlib import Path
 from enum import Enum
 from shutil import copy
 from typing import Self
+import util
 
+   
 class Store:
     '''a location to store files to'''
     
@@ -51,18 +53,17 @@ class Store:
         else:
             # should be unreachable
             raise Exception("invald store state?!")
-    
+
+        
     def store_file(self, file_path: Path, name: str) -> None:
         '''store file_path in store_path'''
         store_path = self.path
-        # 1. create store if DNE
-        # not needed, just call init first
-        #create_store(store_path)
         # 2. generate name
-        # hash later
+        # TODO hash later
         package_name = name
         # 3. create directories
         package_path = store_path / package_name
+        util.remove_path(package_path)
         package_path.mkdir()
         # 4. copy file
         copy(src=file_path, dst=package_path)
