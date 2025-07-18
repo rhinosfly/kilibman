@@ -10,7 +10,7 @@ class Store_State(Enum):
 def get_store_state(store_path: Path) -> Store_State:
     '''check if store is missing malformed or valid'''
     #check is if dir
-     if not store_path.exists():
+    if not store_path.exists():
         return Store_State.MISSING
     if not store_path.is_dir():
         return Store_State.MALFORMED
@@ -30,17 +30,17 @@ def get_store_state(store_path: Path) -> Store_State:
 
 def create_store(store_path: Path) -> None:
     '''create store at store_path if DNE'''
-    store+state = get_store_state(store_path)
-    if store_state = Store_State.MALFORMED:
+    store_state = get_store_state(store_path)
+    if store_state == Store_State.MALFORMED:
         raise Exception("store is malformed")
-    if store_state = Store_State.VALID:
+    if store_state == Store_State.VALID:
         return
-    if store_state = Store_State.MISSING:
+    if store_state == Store_State.MISSING:
         store_path.mkdir()
         return
     else:
         # should be unreachable
-        rasie Exception("invald store state?!")
+        raise Exception("invald store state?!")
 
 def store(store_path: Path, file_path: Path, name: str) -> None:
     '''store file_path in store_path'''
